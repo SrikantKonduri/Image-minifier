@@ -10,6 +10,17 @@ import (
 	"github.com/joho/godotenv"
 )
 
+type Product struct {
+	Product_id                int32
+	Product_name              string
+	Product_description       string
+	Product_price             float32
+	Product_images            string
+	Compressed_product_images string
+	Created_at                string
+	Updated_at                string
+}
+
 func ConnectDB() *sql.DB {
 	var db *sql.DB
 	er := godotenv.Load()
@@ -52,4 +63,19 @@ func ConnectDB() *sql.DB {
 	}
 	fmt.Println("[+] Connected to DB")
 	return db
+}
+
+func AddProduct(db *sql.DB, p Product) (int64, error) {
+	query := "INSERT INTO Products (product_name,product_description,product_price,product_images,created_at,updated_at) VALUES (?, ?, ?, ?, ?,?)"
+	result, err := db.Exec(query, p.Product_name, p.Product_description, p.Product_price, p.Product_images, p.Created_at, p.Updated_at)
+	if err != nil {
+		// utils.FailOnError(err, "Error in executing SQL query")
+		return -1, err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		// utils.FailOnError(err, "Error in getting ID")
+		return -1, err
+	}
+	return id, nil
 }

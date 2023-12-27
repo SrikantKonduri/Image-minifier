@@ -20,6 +20,14 @@ type Product struct {
 	Created_at                string
 	Updated_at                string
 }
+type User struct {
+	User_name      string
+	User_mobile    string
+	User_latitude  string
+	User_longitude string
+	Created_at     string
+	Updated_at     string
+}
 
 func ConnectDB() *sql.DB {
 	var db *sql.DB
@@ -68,6 +76,21 @@ func ConnectDB() *sql.DB {
 func AddProduct(db *sql.DB, p Product) (int64, error) {
 	query := "INSERT INTO Products (product_name,product_description,product_price,product_images,created_at,updated_at) VALUES (?, ?, ?, ?, ?,?)"
 	result, err := db.Exec(query, p.Product_name, p.Product_description, p.Product_price, p.Product_images, p.Created_at, p.Updated_at)
+	if err != nil {
+		// utils.FailOnError(err, "Error in executing SQL query")
+		return -1, err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		// utils.FailOnError(err, "Error in getting ID")
+		return -1, err
+	}
+	return id, nil
+}
+
+func AddUser(db *sql.DB, u User) (int64, error) {
+	query := "INSERT INTO Users (name,mobile,latitude,longitude,created_at,updated_at) VALUES (?, ?, ?, ?, ?,?)"
+	result, err := db.Exec(query, u.User_name, u.User_mobile, u.User_latitude, u.User_longitude, u.Created_at, u.Updated_at)
 	if err != nil {
 		// utils.FailOnError(err, "Error in executing SQL query")
 		return -1, err

@@ -34,7 +34,7 @@ func HandleAddUser(db *sql.DB) http.HandlerFunc {
 		currentTime := time.Now().Format("2006-01-02 15:04:05")
 
 		fmt.Printf("Received message: %+v\n", req)
-		var newUser databases.User = databases.User{req.UserName, req.UserMobile, req.UserLatitude, req.UserLongitude, currentTime, currentTime}
+		var newUser databases.User = databases.User{1, req.UserName, req.UserMobile, req.UserLatitude, req.UserLongitude, currentTime, currentTime}
 
 		uid, err := databases.AddUser(db, newUser)
 		if err != nil {

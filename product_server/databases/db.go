@@ -21,6 +21,7 @@ type Product struct {
 	Updated_at                string
 }
 type User struct {
+	User_id        int
 	User_name      string
 	User_mobile    string
 	User_latitude  string
@@ -101,4 +102,23 @@ func AddUser(db *sql.DB, u User) (int64, error) {
 		return -1, err
 	}
 	return id, nil
+}
+
+func VerifyUser(db *sql.DB, userID int) (bool, error) {
+	query := "SELECT id FROM Users WHERE id=?"
+	row := db.QueryRow(query, userID)
+
+	var user sql.NullInt32
+	err := row.Scan(&user)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			// Handle case where no rows were returned
+			return false, nil
+		}
+		return false, err
+	}
+	if user.Valid {
+		return true, nil
+	}
+	return false, nil
 }

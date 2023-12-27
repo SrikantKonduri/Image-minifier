@@ -22,6 +22,7 @@ func main() {
 	db := databases.ConnectDB()
 
 	router := mux.NewRouter()
+	router.HandleFunc("/users/add", handlers.HandleAddUser(db)).Methods("POST")
 	router.HandleFunc("/products/add", handlers.HandleAddProduct(db, ch, ctx)).Methods("POST")
 	router.HandleFunc("/", handlers.HandleHome)
 

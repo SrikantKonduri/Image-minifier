@@ -38,6 +38,18 @@ func HandleAddProduct(db *sql.DB, ch *amqp.Channel, ctx context.Context) http.Ha
 			return
 		}
 
+		userExist, err := databases.VerifyUser(db, req.UserID)
+
+		if err != nil {
+			http.Error(w, "Failed to verify user", http.StatusInternalServerError)
+			return
+		}
+		if !userExist {
+			http.Error(w, "User does not exist", http.StatusOK)
+			fmt.Println("[+] User does not exist")
+			return
+		}
+
 		product_images := strings.Join(req.ProductImages, ",")
 		currentTime := time.Now().Format("2006-01-02 15:04:05")
 

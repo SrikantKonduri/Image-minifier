@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"image_server/databases"
+	"image_server/handlers"
 	"image_server/utils"
 
 	"github.com/joho/godotenv"
@@ -61,11 +62,11 @@ func main() {
 	go func() {
 		for d := range msgs {
 			log.Printf("Received a message: %s", d.Body)
-			_, err := strconv.Atoi(string(d.Body))
+			value, err := strconv.Atoi(string(d.Body))
 			if err != nil {
 				log.Printf("Error converting message to int: %v", err)
 			}
-			// handlers.HandleProduct(db, int64(value))
+			handlers.HandleProduct(db, int64(value))
 		}
 	}()
 

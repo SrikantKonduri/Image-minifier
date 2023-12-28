@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"image_server/utils"
 	"os"
+	"strings"
 
 	"github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -52,4 +53,29 @@ func ConnectDB() *sql.DB {
 	}
 	fmt.Println("[+] Connected to DB")
 	return db
+}
+
+func GetProductURLS(db *sql.DB, productId int64) ([]string, error) {
+	var emptyArray []string
+
+	query := "SELECT product_images FROM Products WHERE product_id=?"
+	row := db.QueryRow(query, productId)
+
+	var imagesStr sql.NullString
+	err := row.Scan(&imagesStr)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			// Handle case where no rows were returned
+			return emptyArray, nil
+		}
+		return emptyArray, err
+	}
+
+	if imagesStr.Valid {
+		urls := strings.Split(imagesStr.String, ",")
+		fmt.Println("Result: ", urls)
+		urls = urls
+		return urls, nil
+	}
+	return emptyArray, nil
 }

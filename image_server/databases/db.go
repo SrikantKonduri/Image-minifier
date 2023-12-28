@@ -79,3 +79,34 @@ func GetProductURLS(db *sql.DB, productId int64) ([]string, error) {
 	}
 	return emptyArray, nil
 }
+
+func GetCompressedURL(db *sql.DB, productId int64) (string, error) {
+	var emptyStr string
+
+	query := "SELECT compressed_product_images FROM Products WHERE product_id=?"
+	row := db.QueryRow(query, productId)
+
+	var compressed_img sql.NullString
+	err := row.Scan(&compressed_img)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			// Handle case where no rows were returned
+			return emptyStr, nil
+		}
+		return emptyStr, err
+	}
+
+	if compressed_img.Valid {
+		return compressed_img.String, nil
+	}
+	return emptyStr, nil
+}
+
+func UpdateCompressedURL(db *sql.DB, productId int64, url string) error {
+	query := "UPDATE Products SET compressed_product_images = ? WHERE product_id = ?"
+	_, err := db.Exec(query, url, productId)
+	if err != nil {
+		return err
+	}
+	return nil
+}

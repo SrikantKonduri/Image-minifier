@@ -68,6 +68,6 @@ func ProduceMessage(productId int64, ch *amqp.Channel, ctx context.Context, qNam
 		utils.FailOnError(err, "Failed to publish a message")
 		return err
 	}
-	log.Printf(" [x] Sent %s\n", productId)
+	log.Printf(" [x] Sent %d\n", productId)
 	return nil
 }

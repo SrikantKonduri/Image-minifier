@@ -1,2 +1,4 @@
 image_server/products
 image_server/utils/testImages
+image_server/.env
+product_server/.env

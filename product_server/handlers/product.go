@@ -24,6 +24,11 @@ type RecProduct struct {
 	ProductPrice       float32  `json:"product_price"`
 }
 
+type Response struct {
+	Pid     int    `json:"pid"`
+	Message string `json:"message"`
+}
+
 func HandleAddProduct(db *sql.DB, ch *amqp.Channel, ctx context.Context) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// Read the JSON request body
@@ -45,7 +50,7 @@ func HandleAddProduct(db *sql.DB, ch *amqp.Channel, ctx context.Context) http.Ha
 			return
 		}
 		if !userExist {
-			http.Error(w, "User does not exist", http.StatusOK)
+			http.Error(w, "User does not exist", http.StatusUnauthorized)
 			fmt.Println("[+] User does not exist")
 			return
 		}
@@ -58,7 +63,7 @@ func HandleAddProduct(db *sql.DB, ch *amqp.Channel, ctx context.Context) http.Ha
 
 		pid, err := databases.AddProduct(db, newProduct)
 		if err != nil {
-			http.Error(w, "Failed to add product", http.StatusBadRequest)
+			http.Error(w, "Failed to add product", http.StatusInternalServerError)
 			fmt.Println("[x] ", err)
 			return
 		}

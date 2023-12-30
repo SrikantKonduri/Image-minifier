@@ -65,5 +65,8 @@ The Product server API receives the following data in json format for adding pro
 #### Integration Testing
 
 1. Open terminal and navigate to `tests`, run `go test integration_test.go`
+#### Benchmark Testing
+
+1. Open terminal and navigate to `tests`, run `go test -bench=. .`
 
 ---

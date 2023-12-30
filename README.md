@@ -41,6 +41,7 @@ The Product server API receives the following data in json format for adding pro
 ### Setup
 
 - Make sure you have rabbitMQ, MySQL server, Go installed in your system.
+- After installing make sure you run MySQL and RabbitMQ servers in your system.
 - Set environment variables in both image_server and product_server directories accordingly in .env file.
 - Navigate to image_server and product_server directories and run `go mod tidy` to make sure all dependencies are installed in the system.
 - Run commands mentioned in `init.sql`

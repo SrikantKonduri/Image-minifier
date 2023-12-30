@@ -26,7 +26,6 @@ func HandleProduct(db *sql.DB, productId int64) {
 	newCompressedURL := compressedURL
 
 	for _, url := range imageURLs {
-		// Download the image
 		// fmt.Printf("Downloadig file: %s\n", url)
 		imageReader, err, msg := utils.DownloadImage(url)
 		if err != nil {

@@ -1,4 +1,3 @@
-// databases_test.go
 package databases_test
 
 import (
@@ -46,7 +45,7 @@ func TestGetProductURLS(t *testing.T) {
 
 	dataSourceName := cfg.FormatDSN()
 
-	// Get a database handle.
+	// Get a database handle
 	var err error
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
@@ -59,10 +58,10 @@ func TestGetProductURLS(t *testing.T) {
 	}
 
 	defer db.Close()
-	// Call the function with a sample product ID
+
 	urls, err := databases.GetProductURLS(db, 1)
 	urls = urls
-	// Check if there is no error
+
 	if err != nil {
 		t.Errorf("GetProductURLS failed with error: %v", err)
 	}
@@ -77,5 +76,4 @@ func TestGetProductURLS(t *testing.T) {
 		t.Errorf("Fetched invalid URLS")
 	}
 
-	// Add additional checks for the returned URLs if needed
 }

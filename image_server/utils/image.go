@@ -55,7 +55,6 @@ func SaveImage(img []byte, dir string, comp_url string) (string, error) {
 		return "", err
 	}
 
-	// Get the base name (file name) without extension
 	imageName := filepath.Base(parsedURL.Path)
 	imageUUID := uuid.New()
 	imageName = fmt.Sprintf("%s_%s", imageUUID.String(), imageName)
@@ -65,7 +64,6 @@ func SaveImage(img []byte, dir string, comp_url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	// filepath := filepath.Join(dir, filename)
 	f, err := os.Create(outputFileName)
 	if err != nil {
 		return "", err
@@ -76,8 +74,6 @@ func SaveImage(img []byte, dir string, comp_url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
-	// fmt.Printf("Image saved to file")
 
 	return outputFileName, err
 }

@@ -19,7 +19,6 @@ func TestConnectDB(t *testing.T) {
 
 	dataSourceName := cfg.FormatDSN()
 
-	// Get a database handle.
 	var err error
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
@@ -44,7 +43,6 @@ func TestAddProduct(t *testing.T) {
 
 	dataSourceName := cfg.FormatDSN()
 
-	// Get a database handle.
 	var err error
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
@@ -57,7 +55,6 @@ func TestAddProduct(t *testing.T) {
 	}
 	defer db.Close()
 
-	// Create a sample product for testing
 	product := Product{
 		Product_name:        "Test Product",
 		Product_description: "Test Description",
@@ -67,22 +64,18 @@ func TestAddProduct(t *testing.T) {
 		Updated_at:          time.Now().Format("2006-01-02 15:04:05"),
 	}
 
-	// Call the AddProduct function
 	id, err := AddProduct(db, product)
 
-	// Check if there is no error
 	if err != nil {
 		t.Errorf("AddProduct failed with error: %v", err)
 	}
 
-	// Check if the returned ID is greater than 0
 	if id <= 0 {
 		t.Errorf("AddProduct returned an invalid ID: %d", id)
 	}
 }
 
 func TestAddUser(t *testing.T) {
-	// Create a mock database connection (you may need to adjust this based on your database setup)
 	cfg := mysql.Config{
 		User:   "root",
 		Passwd: "admin",
@@ -93,7 +86,6 @@ func TestAddUser(t *testing.T) {
 
 	dataSourceName := cfg.FormatDSN()
 
-	// Get a database handle.
 	var err error
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
@@ -106,7 +98,6 @@ func TestAddUser(t *testing.T) {
 	}
 	defer db.Close()
 
-	// Create a sample user for testing
 	user := User{
 		User_name:      "Test User",
 		User_mobile:    "1234567890",
@@ -116,22 +107,18 @@ func TestAddUser(t *testing.T) {
 		Updated_at:     time.Now().Format("2006-01-02 15:04:05"),
 	}
 
-	// Call the AddUser function
 	id, err := AddUser(db, user)
 
-	// Check if there is no error
 	if err != nil {
 		t.Errorf("AddUser failed with error: %v", err)
 	}
 
-	// Check if the returned ID is greater than 0
 	if id <= 0 {
 		t.Errorf("AddUser returned an invalid ID: %d", id)
 	}
 }
 
 func TestVerifyUser(t *testing.T) {
-	// Create a mock database connection (you may need to adjust this based on your database setup)
 	cfg := mysql.Config{
 		User:   "root",
 		Passwd: "admin",

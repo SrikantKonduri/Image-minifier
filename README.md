@@ -17,9 +17,9 @@ The Product server API receives the following data in json format for adding pro
 |------------|---------------|
 | id         | Integer       |
 | name       | Varchar(255)  |
-| mobile     | Varchar(255)  |
-| latitude   | Varchar(255)  |
-| longitude  | Varchar(255)  |
+| mobile     | Varchar(20)  |
+| latitude   | Varchar(20)  |
+| longitude  | Varchar(20)  |
 | created_at | Datetime      |
 | updated_at | Datetime      |
 
